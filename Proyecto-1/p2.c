@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
         }
     }
     fclose(inFile);
-    outFile = fopen(argv[2],"w");
+    outFile = fopen(argv[3],"w");
     for (int r = i-1; r >= 0; r--)
     {
         fprintf(outFile,"%s %d\n",keys[r],vals[r]);
