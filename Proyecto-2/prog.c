@@ -52,7 +52,7 @@ void* ordenAlfa(void* file){
     }
     for (int r = 0; r < i; r++)
     {
-        fprintf(outFile,"%s %s %d\n",(bDatos+r)->ocupacion,(bDatos+r)->nombre,(bDatos+r)->edad);
+        fprintf(outFile,"\n%s %s %d",(bDatos+r)->ocupacion,(bDatos+r)->nombre,(bDatos+r)->edad);
     }
     fclose(outFile);
     return NULL;
@@ -115,7 +115,7 @@ int main(int argc, char const *argv[]) {
         printf("No se puede abrir %s\n",argv[3]);
         exit(8);
     }
-    printf("-----Datos Ordenados por Ocupación-----\n");
+    printf("-----Datos Ordenados por Ocupación-----");
     while (!feof(salida))
     {
         printf("%c",c);
