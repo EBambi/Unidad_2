@@ -59,8 +59,9 @@ void* ordenAlfa(void* file){
 }
 
 int main(int argc, char const *argv[]) {
-    int edad[100], valor, n=100, q, j, temp;
-    char nombres[100][20], nombre[20], ocupaciones[100][20], ocupacion[20], tempC[20];
+    int edad[100];
+    char nombres[100][20], nombre[20], ocupaciones[100][20], ocupacion[20], tempC[20],c;
+    FILE *salida;
 
     bDatos = malloc(sizeof(struct persona)*100);
 
@@ -77,21 +78,50 @@ int main(int argc, char const *argv[]) {
         }
     }
     fclose(inFile);
+    printf("-----Estructura-----\n");
     for (int j = 0; j < i; j++)
     {
         printf("%s %s %d\n",(bDatos+j)->nombre,(bDatos+j)->ocupacion,(bDatos+j)->edad);
     }
 
     pthread_t id_hilo_1;
-    char nombreFile[20];
-    strcpy(nombreFile,argv[2]);
-    pthread_create(&id_hilo_1, NULL, &ordenInverso, &nombreFile);
-    pthread_join (id_hilo_1, NULL);
-
     pthread_t id_hilo_2;
-    strcpy(nombreFile,argv[3]);
-    pthread_create(&id_hilo_2, NULL, &ordenAlfa, &nombreFile);
+
+    char nombre1[20], nombre2[20];
+    strcpy(nombre1,argv[2]);
+    strcpy(nombre2,argv[3]);
+
+    pthread_create(&id_hilo_1, NULL, &ordenInverso, &nombre1);
+    pthread_create(&id_hilo_2, NULL, &ordenAlfa, &nombre2);
+
+    pthread_join (id_hilo_1, NULL);
     pthread_join (id_hilo_2, NULL);
+
+    salida = fopen(argv[2],"r");
+    if(salida == NULL){
+        printf("No se puede abrir %s\n",argv[2]);
+        exit(8);
+    }
+    printf("-----Datos Invertidos-----\n");
+    while (!feof(salida))
+    {
+        printf("%c",c);
+        c=fgetc(salida);
+    }
+    fclose(salida);
+
+    salida = fopen(argv[3],"r");
+    if(salida == NULL){
+        printf("No se puede abrir %s\n",argv[3]);
+        exit(8);
+    }
+    printf("-----Datos Ordenados por Ocupación-----\n");
+    while (!feof(salida))
+    {
+        printf("%c",c);
+        c=fgetc(salida);
+    }
+    fclose(salida);
 
     return EXIT_SUCCESS;
 }
